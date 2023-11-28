@@ -1,18 +1,18 @@
 package gierka;
 
 public class Zwiadowca extends Postac{
-	public Zwiadowca(String name, String gildia, Sklepzbronia sklepzbronia) {
+	public Zwiadowca(String name, String gildia) {
 		super(name);
-		this.gildia="Wojownik";
+		this.gildia="Zwiadowca";
 		this.atak=(sila*0.1+zrecznosc+inteligencja*0.1)*bron.getObrazenia();
 		this.gildia=gildia;
-		this.sklepzbronia=sklepzbronia;
+		//this.sklepzbronia=sklepzbronia;
 	}
 	
 	@Override
     public void obliczAtak() {
 		if (bron.getTyp()=='Z') {
-			this.atak = 1.1*((0.1*sila + zrecznosc + 0.1 * inteligencja) * bron.getObrazenia());
+			this.atak = (1.1*(0.1*sila + zrecznosc + 0.1 * inteligencja) * bron.getObrazenia());
 		}
 		else{
 			this.atak = (0.1*sila + zrecznosc + 0.1 * inteligencja) * bron.getObrazenia();

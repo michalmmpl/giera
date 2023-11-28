@@ -1,12 +1,12 @@
 package gierka;
 
 public class Mag extends Postac{
-	public Mag(String name, String gildia, Sklepzbronia sklepzbronia) {
+	public Mag(String name, String gildia) {
 		super(name);
 		this.gildia="Mag";
 		this.atak=(sila*0.1+zrecznosc*0.1+inteligencja)*bron.getObrazenia();
 		this.gildia=gildia;
-		this.sklepzbronia=sklepzbronia;
+		//this.sklepzbronia=sklepzbronia;
 	}
 	
 	@Override

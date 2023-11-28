@@ -56,6 +56,10 @@ public class Akcja {
                         System.out.println("Gracz " + przeciwnik.name + " zostal wyeliminowany!");
                         listaZawodnikow.get(wyborPrzeciwnika-1).status="Defeated";
                     }
+                    if (postac.hp<=0) {
+                        System.out.println(postac.name + ", zostales wyeliminowany!");
+                        postac.status="Defeated";
+                    }
                 } else {
                     System.out.println("Nieprawidłowy numer przeciwnika.");
                 }

@@ -9,7 +9,7 @@ public class Turniej {
 	public Sklepzbronia sklepzbronia;
 	
 	public Turniej() {
-	    sklepzbronia = new Sklepzbronia(); // Inicjalizacja sklepu
+	    //sklepzbronia = new Sklepzbronia(); // Inicjalizacja sklepu
 	}
 	
 	public void dodajZawodnikow() {
@@ -19,18 +19,30 @@ public class Turniej {
 
 	        System.out.println("Jak masz na imie?");
 	        String firstName = scan.nextLine();
-	        System.out.println("Jaka gildia?");
-	        String guild = scan.nextLine();
-	        Postac nowaPostac;
-	        if (guild.equalsIgnoreCase("Wojownik")) {
-	            nowaPostac = new Wojownik(firstName, guild, sklepzbronia);
-	        } else if (guild.equalsIgnoreCase("Zwiadowca")) {
-	            nowaPostac = new Zwiadowca(firstName, guild, sklepzbronia);
-	        } else if (guild.equalsIgnoreCase("Mag")) {
-	            nowaPostac = new Mag(firstName, guild, sklepzbronia);
-	        } else {
-	            nowaPostac = new Wojownik(firstName, "Wojownik", sklepzbronia);
+	        String guildInput;
+	        Gildie wybranaGildia = null;
+	        
+	        do {
+	            System.out.println("Jaka gildia?");
+	            guildInput = scan.nextLine();
+	            try {
+	                wybranaGildia = Gildie.valueOf(guildInput.toUpperCase());
+	            } catch (IllegalArgumentException e) {
+	                System.out.println("Podana gildia nie istnieje. Dostepne gildie to: Wojownik, Mag, Zwiadowca.");
+	            }
+	        } while (wybranaGildia == null);
+
+	        Postac nowaPostac=null;
+
+	        if (wybranaGildia == Gildie.WOJOWNIK) {
+	            nowaPostac = new Wojownik(firstName, wybranaGildia.toString());
+	        } else if (wybranaGildia == Gildie.MAG) {
+	            nowaPostac = new Mag(firstName, wybranaGildia.toString());
+	        } else if (wybranaGildia == Gildie.ZWIADOWCA) {
+	            nowaPostac = new Zwiadowca(firstName, wybranaGildia.toString());
+
 	        }
+		
 	        
 	        listaZawodnikow.add(nowaPostac);
 	        //scan.nextLine();

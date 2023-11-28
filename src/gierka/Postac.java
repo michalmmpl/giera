@@ -15,7 +15,7 @@ abstract class Postac {
 	public double zrecznosc;
 	public double inteligencja;
 	public Bron bron;
-	public Sklepzbronia sklepzbronia;	
+	//public Sklepzbronia sklepzbronia;	
 	public double atak;
 	public String status;
 	
@@ -35,6 +35,39 @@ abstract class Postac {
 	public void obliczAtak(){
 		
 	}
+    public static class sklep {
+        public static List<Bron> arsenal;
+
+        static {
+            arsenal = new ArrayList<>();
+            arsenal.add(new Bron("Sztylet", 3, 25,'W'));
+            arsenal.add(new Bron("Maly miecz", 10, 150,'W'));
+            arsenal.add(new Bron("Miecz", 25, 700,'W'));
+            arsenal.add(new Bron("Duzy miecz", 50, 1200,'W'));
+            arsenal.add(new Bron("Ogromny miecz", 80, 2000,'W'));
+            arsenal.add(new Bron("Excalibur", 115, 3600,'W'));
+
+            arsenal.add(new Bron("Proca", 3, 25, 'Z'));
+            arsenal.add(new Bron("Krotki luk", 10, 175,'Z'));
+            arsenal.add(new Bron("Luk", 25, 700,'Z'));
+            arsenal.add(new Bron("Dlugi luk", 60, 1200,'Z'));
+
+            arsenal.add(new Bron("Rozdzka", 3, 25,'M'));
+            arsenal.add(new Bron("Maly kostur", 10, 175,'M'));
+            arsenal.add(new Bron("Kostur", 25, 700,'M'));
+            arsenal.add(new Bron("Dlugi kostur", 60, 1200, 'M'));
+        }
+
+        public static void wyswietlOferte() {
+            int i = 1;
+            System.out.println("Oto lista dostepnych broni w arsenale!");
+            for(Bron bronie: arsenal) {
+                System.out.println("Numer: "+i+", Nazwa: "+bronie.getName()+", Obrazenia: "+bronie.getObrazenia()+", Cena: "+bronie.getCena());
+                i++;
+            }
+            System.out.println("Podaj nr broni, ktora chcesz kupic!");
+        }
+    }
 	
 	public void parametry() {
 		System.out.println("----------------------------");
@@ -91,11 +124,11 @@ abstract class Postac {
 	}
 	
 	public void kupujeBron(int index) {
-	    if (index >= 0 && index < sklepzbronia.arsenal.size()) {
-	        if (this.gold>sklepzbronia.arsenal.get(index).getCena()) {
-	        	this.bron = sklepzbronia.arsenal.get(index);
+	    if (index >= 0 && index < sklep.arsenal.size()) {
+	        if (this.gold>sklep.arsenal.get(index).getCena()) {
+	        	this.bron = sklep.arsenal.get(index);
 		        System.out.println("Zakupiono bron: " + bron.getName());
-		        this.gold-=sklepzbronia.arsenal.get(index).getCena();
+		        this.gold-=sklep.arsenal.get(index).getCena();
 		        obliczAtak();
 	        }
 	        else {
@@ -107,7 +140,7 @@ abstract class Postac {
 	}
 
 	public void kupBron(Scanner scanner) {
-	    sklepzbronia.wyswietlOferte();
+	    sklep.wyswietlOferte();
 	    try {
 	        int num = scanner.nextInt();
 	        scanner.nextLine(); 
@@ -121,12 +154,25 @@ abstract class Postac {
 	
 	public void walka(Postac przeciwnik) {
 	    System.out.println(name + " walczy z " + przeciwnik.name + "!");
-
+	
 	    if (this.atak>przeciwnik.atak) {
+	    	double goldy;
 	    	System.out.println("Wygrywasz walke!");
 	    	przeciwnik.hp-=(this.atak-przeciwnik.atak);
 	    	System.out.println("Przeciwnik otrzymal "+(this.atak-przeciwnik.atak)+" obrazen.");
-	    	double goldy=przeciwnik.gold*0.3;
+	    	if (przeciwnik.gold>100) {
+	    		goldy=przeciwnik.gold*0.3;
+	    	}
+	    	else if (przeciwnik.gold<=100 && przeciwnik.gold>20) {
+	    		goldy=przeciwnik.gold*0.5;
+	    	}
+	    	else if(przeciwnik.gold<=20 && przeciwnik.gold>0) {
+	    		goldy=przeciwnik.gold;
+	    	}
+	    	else {
+	    		goldy=0;
+	    	}
+	    	
 	    	przeciwnik.gold-=goldy;
 	    	this.gold+=goldy;
 	    	if (przeciwnik.hp<=0) {
@@ -135,13 +181,22 @@ abstract class Postac {
 	    	}
 	    }
 	    else if (this.atak<przeciwnik.atak) {
-		    System.out.println("Przegrywasz walke!");
+		    double golds;
+	    	System.out.println("Przegrywasz walke!");
 		    this.hp-=(przeciwnik.atak-this.atak);
-		    double goldy=przeciwnik.gold*0.3;
-		    przeciwnik.gold+=goldy;
-		    this.gold-=goldy;
+		    if (this.gold>100) {
+		    	golds=this.gold*0.5;
+		    }
+		    else if (this.gold<=100 && this.gold>0) {
+		    	golds=this.gold*0.7;
+		    }
+		    else {
+		    	golds=0;
+		    }
+		    this.gold-=golds;
+		    przeciwnik.gold+=golds;
 		    if (this.hp<=0) {
-		    	System.out.println(this.name+" , zostaleś wyeliminowany!");
+		    	System.out.println(this.name+" , zostales wyeliminowany!");
 		    		
 		    }
 	    }

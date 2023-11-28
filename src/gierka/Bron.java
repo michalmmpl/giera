@@ -35,8 +35,4 @@ public class Bron {
 	public void setTyp(char typ) {
 		this.typ = typ;
 	}
-	
-	
-	
-
 }

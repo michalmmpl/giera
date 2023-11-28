@@ -2,12 +2,12 @@ package gierka;
 
 public class Wojownik extends Postac {
 
-	public Wojownik(String name, String gildia, Sklepzbronia sklepzbronia) {
+	public Wojownik(String name, String gildia) {
 		super(name);
 		this.gildia="Wojownik";
 		this.atak=(sila+zrecznosc*0.1+inteligencja*0.1)*bron.getObrazenia();
 		this.gildia=gildia;
-		this.sklepzbronia=sklepzbronia;
+
 	}
 	@Override
     public void obliczAtak() {
@@ -31,5 +31,4 @@ public class Wojownik extends Postac {
 			System.out.println("Masz za malo zlota!");
 		}
 	}
-
 }
